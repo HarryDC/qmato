@@ -2,18 +2,17 @@
 
 #include <format>
 
-
 TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
 {
     ui.setupUi(this);
     connect(&m_timer, &QTimer::timeout, this, &TimerWidget::updateDisplay);
     m_timer.setInterval(500);
     connect(ui.startButton, &QPushButton::clicked, this, &TimerWidget::toggle);
-    connect(&m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
+    connect(m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
 }
 
 void TimerWidget::updateDisplay() {
-    int interval = m_tomatotimer.remainingTime() / 1000; // to sec
+    int interval = m_tomatotimer->remainingTime();
     int secs = interval % 60;
     interval = interval / 60;
     int mins = interval % 60;
@@ -23,7 +22,7 @@ void TimerWidget::updateDisplay() {
 
 void TimerWidget::start()
 {
-    m_tomatotimer.start();
+    m_tomatotimer->start();
     m_timer.start();
     m_isRunning = true;
     ui.startButton->setText(tr("Stop"));
@@ -31,7 +30,7 @@ void TimerWidget::start()
 
 void TimerWidget::stop()
 {
-    m_tomatotimer.stop();
+    m_tomatotimer->stop();
     m_timer.stop();
     m_isRunning = false;
     ui.startButton->setText(tr("Start"));
@@ -49,6 +48,5 @@ void TimerWidget::toggle(bool checked) {
 void TimerWidget::intervalTimedOut() {
     // Play Sound
     // Flash Screen
-
 }
 

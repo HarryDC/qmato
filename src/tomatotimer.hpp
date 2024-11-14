@@ -15,7 +15,13 @@ public:
     void stop();
     void toggle();
 
-    void setBreaks(const std::vector<int>& breaks);
+
+    // Time in seconds
+    void setTimes(
+        int workPeriod,
+        int shortBreakPeriod, 
+        int shortBreakRepeat, 
+        int longBreakPeriod);
 
     void setWorkPeriod(int workPeriod);
 
@@ -24,9 +30,26 @@ public:
 
     std::vector<int> intervals() const;
 
+    // Time in seconds
     int remainingTime() const;
 
     int currentIntervalTime() const;
+
+    const int workPeriod() const noexcept {
+        return m_workPeriod;
+    }
+
+    const int shortBreakPeriod() const noexcept {
+        return m_shortBreakPeriod;
+    }
+
+    const int shortBreakRepeat() const noexcept {
+        return m_shortBreakRepeat;
+    }
+
+    const int longBreakPeriod() const noexcept {
+        return m_longBreakPeriod;
+    }
 
 signals:
     void timeout();
@@ -37,8 +60,11 @@ private slots:
 private:
     void updateIntervals();
 
-    std::vector<int> m_breaks{ 5 * 60000, 5 * 60000, 15 * 60000 };
-    int m_workPeriod{ 25 * 600000 };
+    int m_workPeriod{ 25 };
+    int m_shortBreakPeriod{ 5 };
+    int m_shortBreakRepeat{ 3 };
+    int m_longBreakPeriod{ 15 };
+
     int m_currentInterval = 0;
     bool m_autoAdvance = false;
     std::vector<int> m_intervals;

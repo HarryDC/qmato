@@ -9,6 +9,9 @@ qt_add_executable(${PROJECT_NAME}
 	timerwidget.ui
 	timerwidget.hpp
 	timerwidget.cpp
+	settingswidget.ui
+	settingswidget.hpp
+	settingswidget.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 

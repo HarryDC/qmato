@@ -18,11 +18,11 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="TimerTab">
        <attribute name="title">
-        <string>Tab 1</string>
+        <string>Timer</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
@@ -30,10 +30,15 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="SettingsTab">
        <attribute name="title">
-        <string>Tab 2</string>
+        <string>Settings</string>
        </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="SettingsWidget" name="settingsWidget" native="true"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -56,6 +61,12 @@
    <class>TimerWidget</class>
    <extends>QWidget</extends>
    <header>timerwidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SettingsWidget</class>
+   <extends>QWidget</extends>
+   <header>settingswidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

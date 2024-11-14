@@ -9,7 +9,7 @@ TomatoTimer::TomatoTimer(QObject* parent) : QObject(parent) {
 
 void TomatoTimer::start()
 {
-    m_timer.setInterval(m_intervals[m_currentInterval]);
+    m_timer.setInterval(m_intervals[m_currentInterval] * 1000 * 60);
     m_timer.start();
     m_currentInterval = (m_currentInterval + 1) % m_intervals.size();
 }
@@ -23,8 +23,12 @@ void TomatoTimer::toggle()
 {
 }
 
-void TomatoTimer::setBreaks(const std::vector<int>& breaks) {
-    m_breaks = breaks;
+void TomatoTimer::setTimes(int workPeriod, int shortBreakPeriod, int shortBreakRepeat, int longBreakPeriod)
+{
+    m_workPeriod = workPeriod;
+    m_shortBreakPeriod = shortBreakPeriod;
+    m_shortBreakRepeat = shortBreakRepeat;
+    m_longBreakPeriod = longBreakPeriod;
     updateIntervals();
 }
 
@@ -36,7 +40,7 @@ void TomatoTimer::setWorkPeriod(int workPeriod) {
 std::vector<int> TomatoTimer::intervals() const { return m_intervals; }
 
 int TomatoTimer::remainingTime() const {
-    return m_timer.remainingTime();
+    return m_timer.remainingTime() / 1000;
 }
 
 int TomatoTimer::currentIntervalTime() const
@@ -46,10 +50,12 @@ int TomatoTimer::currentIntervalTime() const
 
 void TomatoTimer::updateIntervals() {
     m_intervals.clear();
-    for (auto breakTime : m_breaks) {
+    for (int i = 0; i < m_shortBreakRepeat; ++i) {
         m_intervals.push_back(m_workPeriod);
-        m_intervals.push_back(breakTime);
+        m_intervals.push_back(m_shortBreakPeriod);
     }
+    m_intervals.push_back(m_workPeriod);
+    m_intervals.push_back(m_longBreakPeriod);
 }
 
 void TomatoTimer::onLocalTimeOut() {

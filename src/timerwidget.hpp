@@ -12,6 +12,9 @@ class TimerWidget : public QWidget
 public:
     explicit TimerWidget(QWidget* parent = nullptr);
 
+    void setTimer(TomatoTimer* timer) {
+        m_tomatotimer = timer;
+    }
 
 private slots:
     void updateDisplay();
@@ -22,6 +25,6 @@ private slots:
 private:
     Ui::TimerWidget ui;
     QTimer m_timer;
-    TomatoTimer m_tomatotimer;
+    TomatoTimer* m_tomatotimer = nullptr;
     bool m_isRunning = false;
 };
