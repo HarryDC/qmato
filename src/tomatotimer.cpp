@@ -11,12 +11,12 @@ void TomatoTimer::start()
 {
     m_timer.setInterval(m_intervals[m_currentInterval] * 1000 * 60);
     m_timer.start();
-    m_currentInterval = (m_currentInterval + 1) % m_intervals.size();
 }
 
 void TomatoTimer::stop()
 {
     m_timer.stop();
+    m_currentInterval = (m_currentInterval + 1) % m_intervals.size();
 }
 
 void TomatoTimer::toggle()
@@ -37,6 +37,14 @@ void TomatoTimer::setWorkPeriod(int workPeriod) {
     updateIntervals();
 }
 
+TomatoTimer::PeriodType TomatoTimer::currentIntervalType() const noexcept {
+    int period = m_intervals[m_currentInterval];
+    if (period == m_workPeriod) return PeriodType::Work;
+    if (period == m_shortBreakPeriod) return PeriodType::ShortBreak;
+    if (period == m_longBreakPeriod) return PeriodType::LongBreak;
+    return PeriodType::Work;
+}
+
 std::vector<int> TomatoTimer::intervals() const { return m_intervals; }
 
 int TomatoTimer::remainingTime() const {
@@ -45,7 +53,7 @@ int TomatoTimer::remainingTime() const {
 
 int TomatoTimer::currentIntervalTime() const
 {
-    return m_timer.interval();
+    return m_timer.interval() / 1000;
 }
 
 void TomatoTimer::updateIntervals() {

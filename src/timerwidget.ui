@@ -15,14 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="timeLabel">
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
+    <widget class="TimeDisplayWidget" name="timeDisplay" native="true"/>
    </item>
    <item>
     <widget class="QPushButton" name="startButton">
@@ -33,6 +26,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TimeDisplayWidget</class>
+   <extends>QWidget</extends>
+   <header>timedisplaywidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

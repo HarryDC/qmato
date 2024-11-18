@@ -12,9 +12,7 @@ class TimerWidget : public QWidget
 public:
     explicit TimerWidget(QWidget* parent = nullptr);
 
-    void setTimer(TomatoTimer* timer) {
-        m_tomatotimer = timer;
-    }
+    void setTimer(TomatoTimer* timer);
 
 private slots:
     void updateDisplay();
@@ -22,6 +20,8 @@ private slots:
     void stop();
     void toggle(bool checked);
     void intervalTimedOut();
+
+
 private:
     Ui::TimerWidget ui;
     QTimer m_timer;

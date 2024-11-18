@@ -9,6 +9,13 @@ class TomatoTimer : public QObject {
     Q_OBJECT
 
 public: 
+
+    enum class PeriodType {
+        Work,
+        ShortBreak,
+        LongBreak,
+    };
+
     TomatoTimer(QObject* parent = nullptr);
 
     void start();
@@ -50,6 +57,10 @@ public:
     const int longBreakPeriod() const noexcept {
         return m_longBreakPeriod;
     }
+
+
+    PeriodType currentIntervalType() const noexcept;
+
 
 signals:
     void timeout();

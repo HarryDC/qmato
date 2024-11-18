@@ -12,6 +12,8 @@ qt_add_executable(${PROJECT_NAME}
 	settingswidget.ui
 	settingswidget.hpp
 	settingswidget.cpp
+	timedisplaywidget.hpp
+	timedisplaywidget.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 

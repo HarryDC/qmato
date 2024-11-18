@@ -16,7 +16,6 @@ public:
         reset(false);
     }
 
-
 public slots:
     void apply(bool);
     void reset(bool);
