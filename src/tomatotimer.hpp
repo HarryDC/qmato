@@ -5,6 +5,8 @@
 
 #include <vector>
 
+// Internally keeps seconds
+// Timer runs on milliseconds
 class TomatoTimer : public QObject {
     Q_OBJECT
 
@@ -24,7 +26,7 @@ public:
 
 
     // Time in seconds
-    void setTimes(
+    void setTimesSeconds(
         int workPeriod,
         int shortBreakPeriod, 
         int shortBreakRepeat, 
@@ -71,10 +73,10 @@ private slots:
 private:
     void updateIntervals();
 
-    int m_workPeriod{ 25 };
-    int m_shortBreakPeriod{ 5 };
-    int m_shortBreakRepeat{ 3 };
-    int m_longBreakPeriod{ 15 };
+    int m_workPeriod{ 25 * 60 };
+    int m_shortBreakPeriod{ 5 * 60 };
+    int m_shortBreakRepeat{ 3 * 60 };
+    int m_longBreakPeriod{ 15 * 60 };
 
     int m_currentInterval = 0;
     bool m_autoAdvance = false;

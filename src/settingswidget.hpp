@@ -4,6 +4,7 @@
 
 #include "tomatotimer.hpp"
 
+// Shows times in minutes 
 class SettingsWidget : public QWidget
 {
     Q_OBJECT
@@ -15,6 +16,9 @@ public:
         m_tomatotimer = timer;
         reset(false);
     }
+
+signals:
+    void updated();
 
 public slots:
     void apply(bool);

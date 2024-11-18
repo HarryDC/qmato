@@ -21,6 +21,8 @@ private slots:
     void toggle(bool checked);
     void intervalTimedOut();
 
+public slots:
+    void timerUpdated();
 
 private:
     Ui::TimerWidget ui;

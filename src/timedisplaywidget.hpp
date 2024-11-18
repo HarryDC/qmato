@@ -6,7 +6,7 @@ class TimeDisplayWidget : public QWidget
 {
     Q_OBJECT
 public:
-    TimeDisplayWidget(QWidget* parent = nullptr) : QWidget(parent) {}
+    TimeDisplayWidget(QWidget* parent = nullptr);
 
 public slots:
     void setTotalTime(int seconds) {
@@ -23,6 +23,10 @@ public slots:
 private:
     void paintEvent(QPaintEvent*) override;
 
-    int m_totalTime;
-    int m_remainingTime;
+    QPen m_circlePen;
+    QPen m_textPen;
+    QFont m_font;
+
+    int m_totalTime = 0;
+    int m_remainingTime = 0;
 };

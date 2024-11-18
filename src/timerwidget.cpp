@@ -17,13 +17,14 @@ void TimerWidget::setTimer(TomatoTimer* timer) {
     m_tomatotimer = timer;
     if (m_tomatotimer != nullptr) {
         connect(m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
+        ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
     }
 }
 
 void TimerWidget::updateDisplay() {
     int interval = m_tomatotimer->remainingTime();
     ui.timeDisplay->setRemainingTime(interval);
-    //ui.timeLabel->setText(std::format("{}:{}", mins, secs).c_str());
+
 }
 
 void TimerWidget::start()
@@ -50,6 +51,11 @@ void TimerWidget::toggle(bool checked) {
     else {
         start();
     }
+}
+
+void TimerWidget::timerUpdated()
+{
+    ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
 }
 
 void TimerWidget::intervalTimedOut() {

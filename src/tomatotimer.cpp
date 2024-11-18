@@ -9,7 +9,7 @@ TomatoTimer::TomatoTimer(QObject* parent) : QObject(parent) {
 
 void TomatoTimer::start()
 {
-    m_timer.setInterval(m_intervals[m_currentInterval] * 1000 * 60);
+    m_timer.setInterval(m_intervals[m_currentInterval] * 1000);
     m_timer.start();
 }
 
@@ -23,7 +23,7 @@ void TomatoTimer::toggle()
 {
 }
 
-void TomatoTimer::setTimes(int workPeriod, int shortBreakPeriod, int shortBreakRepeat, int longBreakPeriod)
+void TomatoTimer::setTimesSeconds(int workPeriod, int shortBreakPeriod, int shortBreakRepeat, int longBreakPeriod)
 {
     m_workPeriod = workPeriod;
     m_shortBreakPeriod = shortBreakPeriod;
@@ -48,12 +48,17 @@ TomatoTimer::PeriodType TomatoTimer::currentIntervalType() const noexcept {
 std::vector<int> TomatoTimer::intervals() const { return m_intervals; }
 
 int TomatoTimer::remainingTime() const {
-    return m_timer.remainingTime() / 1000;
+    if (m_timer.isActive()) {
+        return m_timer.remainingTime() / 1000;
+    }
+    else {
+        return m_intervals[m_currentInterval];
+    }
 }
 
 int TomatoTimer::currentIntervalTime() const
 {
-    return m_timer.interval() / 1000;
+    return m_intervals[m_currentInterval];
 }
 
 void TomatoTimer::updateIntervals() {
