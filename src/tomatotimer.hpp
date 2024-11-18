@@ -73,7 +73,8 @@ private slots:
 private:
     void updateIntervals();
 
-    int m_workPeriod{ 25 * 60 };
+    // Default Times in seconds
+    int m_workPeriod{ 25 * 60};
     int m_shortBreakPeriod{ 5 * 60 };
     int m_shortBreakRepeat{ 3 * 60 };
     int m_longBreakPeriod{ 15 * 60 };

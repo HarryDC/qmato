@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/qmato">
+        <file>audio/kitchen-ring.wav</file>
+    </qresource>
+</RCC>

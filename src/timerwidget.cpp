@@ -1,5 +1,8 @@
 #include "timerwidget.hpp"
 
+#include <QAudioDevice>
+#include <QMediaDevices>
+
 #include <format>
 
 TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
@@ -8,6 +11,9 @@ TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
     connect(&m_timer, &QTimer::timeout, this, &TimerWidget::updateDisplay);
     m_timer.setInterval(500);
     connect(ui.startButton, &QPushButton::clicked, this, &TimerWidget::toggle);
+
+    m_ring.setSource(QUrl("qrc:/resources/audio/kitchen-ring.wav"));
+    m_ring.setVolume(1.0);
 }
 
 void TimerWidget::setTimer(TomatoTimer* timer) {
@@ -17,6 +23,7 @@ void TimerWidget::setTimer(TomatoTimer* timer) {
     m_tomatotimer = timer;
     if (m_tomatotimer != nullptr) {
         connect(m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
+        connect(m_tomatotimer, &TomatoTimer::timeout, &m_ring, &QSoundEffect::play);
         ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
     }
 }
@@ -59,7 +66,6 @@ void TimerWidget::timerUpdated()
 }
 
 void TimerWidget::intervalTimedOut() {
-    // Play Sound
-    // Flash Screen
+
 }
 

@@ -2,6 +2,7 @@
 
 #include "ui_timerwidget.h"
 #include <QTimer>
+#include <QSoundEffect>
 
 #include "tomatotimer.hpp"
 
@@ -28,5 +29,6 @@ private:
     Ui::TimerWidget ui;
     QTimer m_timer;
     TomatoTimer* m_tomatotimer = nullptr;
+    QSoundEffect m_ring;
     bool m_isRunning = false;
 };

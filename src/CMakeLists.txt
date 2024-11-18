@@ -16,10 +16,17 @@ qt_add_executable(${PROJECT_NAME}
 	timedisplaywidget.cpp
 )
 
+qt_add_resources(${PROJECT_NAME} "qmato"
+    PREFIX "/"
+    FILES
+        resources/audio/kitchen-ring.wav
+)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE 
 	Qt::Core
 	Qt::Gui
-	Qt::Widgets)
+	Qt::Widgets
+	Qt::Multimedia)
 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
