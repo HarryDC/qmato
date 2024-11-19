@@ -1,11 +1,39 @@
 #include "tomatotimer.hpp"
 
-
 TomatoTimer::TomatoTimer(QObject* parent) : QObject(parent) {
     m_timer.setSingleShot(true);
     connect(&m_timer, &QTimer::timeout, this, &TomatoTimer::onLocalTimeOut);
     updateIntervals();
 }
+
+TomatoTimer::TomatoTimer(const QJsonValue& data, QObject* parent)
+{
+    if (!data.isObject()) {
+        qCritical() << "Tomatotimes json data is not an object";
+        return;
+    }
+
+    int workPeriod = data["work_period"].toInt();
+    int shortBreakPeriod = data["short_break_period"].toInt();
+    int shortBreakRepeat = data["short_break_repeat"].toInt();
+    int longBreakPeriod = data["long_break_period"].toInt();
+    bool autoAdvance = data["auto_advance"].toBool();
+    setAutoAdvance(autoAdvance);
+    setPeriodsSeconds(workPeriod, shortBreakPeriod, shortBreakRepeat, longBreakPeriod);
+}
+
+QJsonValue TomatoTimer::toJson()
+{
+    QJsonObject data;
+    data["work_period"] = m_workPeriod;
+    data["short_break_period"] = m_shortBreakPeriod;
+    data["short_break_repeat"] = m_shortBreakRepeat;
+    data["long_break_period"] = m_longBreakPeriod;
+    data["auto_advance"] = m_autoAdvance;
+
+    return QJsonValue(data);
+}
+
 
 void TomatoTimer::start()
 {
@@ -23,7 +51,12 @@ void TomatoTimer::toggle()
 {
 }
 
-void TomatoTimer::setTimesSeconds(int workPeriod, int shortBreakPeriod, int shortBreakRepeat, int longBreakPeriod)
+bool TomatoTimer::isActive() const
+{
+    return m_timer.isActive();
+}
+
+void TomatoTimer::setPeriodsSeconds(int workPeriod, int shortBreakPeriod, int shortBreakRepeat, int longBreakPeriod)
 {
     m_workPeriod = workPeriod;
     m_shortBreakPeriod = shortBreakPeriod;

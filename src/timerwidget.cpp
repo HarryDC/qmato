@@ -5,6 +5,14 @@
 
 #include <format>
 
+namespace {
+const QMap<TomatoTimer::PeriodType, QVector<QString>> motivationText {
+        {TomatoTimer::PeriodType::Work, {"Get ready to do some work", "Keep focusing"}},
+        {TomatoTimer::PeriodType::ShortBreak, {"Get ready for a short break", "Just relax"}},
+        {TomatoTimer::PeriodType::LongBreak, {"Get ready for a long break", "Just relax"}}
+    };
+}
+
 TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
 {
     ui.setupUi(this);
@@ -16,7 +24,8 @@ TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
     m_ring.setVolume(1.0);
 }
 
-void TimerWidget::setTimer(TomatoTimer* timer) {
+void TimerWidget::setTimer(TomatoTimer* timer)
+{
     if (m_tomatotimer != nullptr) {
         disconnect(m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
     }
@@ -25,13 +34,13 @@ void TimerWidget::setTimer(TomatoTimer* timer) {
         connect(m_tomatotimer, &TomatoTimer::timeout, this, &TimerWidget::intervalTimedOut);
         connect(m_tomatotimer, &TomatoTimer::timeout, &m_ring, &QSoundEffect::play);
         ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
+        updateText();
     }
 }
 
 void TimerWidget::updateDisplay() {
     int interval = m_tomatotimer->remainingTime();
     ui.timeDisplay->setRemainingTime(interval);
-
 }
 
 void TimerWidget::start()
@@ -41,6 +50,7 @@ void TimerWidget::start()
     ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
     m_isRunning = true;
     ui.startButton->setText(tr("Stop"));
+    updateText();
 }
 
 void TimerWidget::stop()
@@ -49,6 +59,8 @@ void TimerWidget::stop()
     m_timer.stop();
     m_isRunning = false;
     ui.startButton->setText(tr("Start"));
+    ui.timeDisplay->setTotalTime(m_tomatotimer->currentIntervalTime());
+    updateText();
 }
 
 void TimerWidget::toggle(bool checked) {
@@ -67,5 +79,13 @@ void TimerWidget::timerUpdated()
 
 void TimerWidget::intervalTimedOut() {
 
+}
+
+void TimerWidget::updateText()
+{
+    if (m_tomatotimer == nullptr) return;
+    auto periodType = m_tomatotimer->currentIntervalType();
+    auto index = m_tomatotimer->isActive() ? 1 : 0;
+    ui.previewLabel->setText(motivationText[periodType][index]);
 }
 

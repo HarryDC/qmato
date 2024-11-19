@@ -26,6 +26,8 @@ public slots:
     void timerUpdated();
 
 private:
+    void updateText();
+
     Ui::TimerWidget ui;
     QTimer m_timer;
     TomatoTimer* m_tomatotimer = nullptr;

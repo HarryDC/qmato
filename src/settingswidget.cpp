@@ -8,7 +8,7 @@ SettingsWidget::SettingsWidget(QWidget* parent) : QWidget(parent)
 }
 
 void SettingsWidget::apply(bool) {
-    m_tomatotimer->setTimesSeconds(
+    m_tomatotimer->setPeriodsSeconds(
         ui.workTimeBox->value() * 60,
         ui.shortBreakTimeBox->value() * 60,
         ui.shortBreakRepeatBox->value(),

@@ -2,6 +2,7 @@
 
 #include <QtCore>
 #include <QTimer>
+#include <QJsonValue>
 
 #include <vector>
 
@@ -10,7 +11,7 @@
 class TomatoTimer : public QObject {
     Q_OBJECT
 
-public: 
+public:  
 
     enum class PeriodType {
         Work,
@@ -19,14 +20,20 @@ public:
     };
 
     TomatoTimer(QObject* parent = nullptr);
+    TomatoTimer(const QJsonValue& data, QObject* parent = nullptr);
+
+    // Serialisation
+    QJsonValue toJson();
+
 
     void start();
     void stop();
     void toggle();
+    bool isActive() const;
 
 
     // Time in seconds
-    void setTimesSeconds(
+    void setPeriodsSeconds(
         int workPeriod,
         int shortBreakPeriod, 
         int shortBreakRepeat, 
@@ -76,7 +83,7 @@ private:
     // Default Times in seconds
     int m_workPeriod{ 25 * 60};
     int m_shortBreakPeriod{ 5 * 60 };
-    int m_shortBreakRepeat{ 3 * 60 };
+    int m_shortBreakRepeat{ 3 };
     int m_longBreakPeriod{ 15 * 60 };
 
     int m_currentInterval = 0;
