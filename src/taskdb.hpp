@@ -14,6 +14,10 @@ struct Task {
     bool operator==(const Task& other) const {
         return id == other.id;
     }
+
+    bool operator==(const int otherId) const {
+        return id == otherId;
+    }
 };
 
 class TaskDB : public QObject {
@@ -30,8 +34,9 @@ public:
     void add(const QString& queueName, Task task);
     const QVector<Task>& tasks(const QString& queueName);
     void remove(const QString& queueName, const Task& id);
+    void remove(const QString& queueName, const int id);
     void move(const QString& source, const QString& target, const Task& task);
-
+    void move(const QString& source, const QString& target, const int id);
 private:
     QMap<QString, QVector<Task>> m_tasks;
 };

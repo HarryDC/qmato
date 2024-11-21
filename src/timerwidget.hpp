@@ -21,8 +21,9 @@ private slots:
     void updateDisplay();
     void start();
     void stop();
-    void toggle(bool checked);
+    void toggle(bool);
     void intervalTimedOut();
+    void completedCurrentTask(bool);
 
 public slots:
     void timerUpdated();

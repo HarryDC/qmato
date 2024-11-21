@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0,0,0">
    <item>
     <widget class="TimeDisplayWidget" name="timeDisplay" native="true"/>
    </item>
@@ -32,6 +32,13 @@
    </item>
    <item>
     <widget class="QComboBox" name="taskBox"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="completedButton">
+     <property name="text">
+      <string>Completed</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="startButton">

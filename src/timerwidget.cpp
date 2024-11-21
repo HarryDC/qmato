@@ -19,6 +19,7 @@ TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
     connect(&m_timer, &QTimer::timeout, this, &TimerWidget::updateDisplay);
     m_timer.setInterval(500);
     connect(ui.startButton, &QPushButton::clicked, this, &TimerWidget::toggle);
+    connect(ui.completedButton, &QPushButton::clicked, this, &TimerWidget::completedCurrentTask);
 
     m_ring.setSource(QUrl("qrc:/resources/audio/kitchen-ring.wav"));
     m_ring.setVolume(1.0);
@@ -89,13 +90,20 @@ void TimerWidget::intervalTimedOut() {
 
 }
 
+void TimerWidget::completedCurrentTask(bool)
+{
+    int id = ui.taskBox->currentData().toInt();
+    m_taskdb->move(TaskDB::currentName, TaskDB::completedName, id);
+    ui.taskBox->removeItem(ui.taskBox->currentIndex());
+}
+
 void TimerWidget::updateTasks()
 {
     if (m_taskdb == nullptr) return;
     const auto& tasks = m_taskdb->tasks(TaskDB::currentName);
     ui.taskBox->clear();
     for (const auto& task : tasks) {
-        ui.taskBox->addItem(task.name);
+        ui.taskBox->addItem(task.name, task.id);
     }
 }
 
