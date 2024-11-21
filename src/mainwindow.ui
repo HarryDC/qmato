@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>623</width>
-    <height>423</height>
+    <height>361</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,29 +16,24 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="Tabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="TimerTab">
+      <widget class="TimerWidget" name="timerWidget">
        <attribute name="title">
         <string>Timer</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="TimerWidget" name="timerWidget" native="true"/>
-        </item>
-       </layout>
       </widget>
-      <widget class="QWidget" name="SettingsTab">
+      <widget class="SettingsWidget" name="settingsWidget">
        <attribute name="title">
         <string>Settings</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="SettingsWidget" name="settingsWidget" native="true"/>
-        </item>
-       </layout>
+      </widget>
+      <widget class="TaskWidget" name="tasksWidget">
+       <attribute name="title">
+        <string>Tasks</string>
+       </attribute>
       </widget>
      </widget>
     </item>
@@ -50,7 +45,7 @@
      <x>0</x>
      <y>0</y>
      <width>623</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
@@ -67,6 +62,12 @@
    <class>SettingsWidget</class>
    <extends>QWidget</extends>
    <header>settingswidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TaskWidget</class>
+   <extends>QWidget</extends>
+   <header>taskwidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
