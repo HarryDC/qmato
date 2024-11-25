@@ -5,20 +5,7 @@
 #include <QMap>
 #include <QVector>
 
-struct Task {
-    int id;
-    QString name;
-    int estimate = 0;
-    int elapsedTime = 0;
-
-    bool operator==(const Task& other) const {
-        return id == other.id;
-    }
-
-    bool operator==(const int otherId) const {
-        return id == otherId;
-    }
-};
+#include "task.hpp"
 
 class TaskDB : public QObject {
     Q_OBJECT

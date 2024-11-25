@@ -6,8 +6,12 @@ qt_add_executable(${PROJECT_NAME}
 	settingswidget.cpp
 	settingswidget.hpp
 	settingswidget.ui
+	task.cpp
+	task.hpp
 	taskdb.cpp
 	taskdb.hpp
+	tasktablemodel.cpp
+	tasktablemodel.hpp
 	taskwidget.cpp
 	taskwidget.hpp
 	taskwidget.ui

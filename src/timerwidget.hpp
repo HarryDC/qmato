@@ -5,7 +5,7 @@
 #include <QSoundEffect>
 
 #include "tomatotimer.hpp"
-#include "taskdb.hpp"
+#include "tasktablemodel.hpp"
 
 class TimerWidget : public QWidget
 {
@@ -15,8 +15,8 @@ public:
     explicit TimerWidget(QWidget* parent = nullptr);
 
     void setTimer(TomatoTimer* timer);
-    void setTaskDB(TaskDB* taskdb);
-
+    void setModel(TaskTableModel * taskdb);
+    
 private slots:
     void updateDisplay();
     void start();
@@ -29,13 +29,13 @@ public slots:
     void timerUpdated();
 
 private:
-    void updateTasks();
     void updateText();
 
     Ui::TimerWidget ui;
     QTimer m_timer;
     TomatoTimer* m_tomatotimer = nullptr;
-    TaskDB* m_taskdb = nullptr;
+    TaskTableModel* m_taskmodel = nullptr;
     QSoundEffect m_ring;
     bool m_isRunning = false;
+    QSortFilterProxyModel m_filterModel;
 };

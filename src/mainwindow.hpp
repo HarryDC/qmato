@@ -6,6 +6,7 @@
 
 #include "tomatotimer.hpp"
 #include "taskdb.hpp"
+#include "tasktablemodel.hpp"
 
 class MainWindow : public QMainWindow
 {
@@ -20,5 +21,5 @@ private:
     Ui::MainWindow ui;
     TomatoTimer m_tomatoTimer;
     TaskDB m_taskdb;
-    
+    TaskTableModel m_taskModel;
 };

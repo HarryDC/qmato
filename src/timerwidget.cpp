@@ -23,6 +23,12 @@ TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
 
     m_ring.setSource(QUrl("qrc:/resources/audio/kitchen-ring.wav"));
     m_ring.setVolume(1.0);
+
+    m_filterModel.setFilterFixedString(Task::currentName);
+    m_filterModel.setSourceModel(m_taskmodel);
+    m_filterModel.setFilterKeyColumn(Task::tableColumn);
+    ui.taskBox->setModel(&m_filterModel);
+    ui.taskBox->setModelColumn(Task::nameColumn);
 }
 
 void TimerWidget::setTimer(TomatoTimer* timer)
@@ -39,12 +45,10 @@ void TimerWidget::setTimer(TomatoTimer* timer)
     }
 }
 
-void TimerWidget::setTaskDB(TaskDB* taskdb)
+void TimerWidget::setModel(TaskTableModel* taskModel)
 {
-    m_taskdb = taskdb;
-    if (m_taskdb != nullptr) {
-        updateTasks();
-    }
+    m_taskmodel = taskModel;
+    m_filterModel.setSourceModel(taskModel);
 }
 
 void TimerWidget::updateDisplay() {
@@ -92,19 +96,7 @@ void TimerWidget::intervalTimedOut() {
 
 void TimerWidget::completedCurrentTask(bool)
 {
-    int id = ui.taskBox->currentData().toInt();
-    m_taskdb->move(TaskDB::currentName, TaskDB::completedName, id);
-    ui.taskBox->removeItem(ui.taskBox->currentIndex());
-}
-
-void TimerWidget::updateTasks()
-{
-    if (m_taskdb == nullptr) return;
-    const auto& tasks = m_taskdb->tasks(TaskDB::currentName);
-    ui.taskBox->clear();
-    for (const auto& task : tasks) {
-        ui.taskBox->addItem(task.name, task.id);
-    }
+    // Move selected task to completed model (or just set status flag)
 }
 
 void TimerWidget::updateText()
