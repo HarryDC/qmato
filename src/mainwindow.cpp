@@ -6,24 +6,20 @@
 
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow(parent),
-    m_tomatoTimer(this),
-    m_taskdb({ TaskDB::currentName, TaskDB::completedName }, this)
+    m_tomatoTimer(this)
 {
     QVector<Task> tasks;
     ui.setupUi(this);
     {
         Task t = {.id = 1, .name = "Task1", .table = Task::currentName};
-        m_taskdb.add(TaskDB::currentName, t);
         tasks.push_back(t);
     }
     {
         Task t = {.id = 2,  .name = "Task2", .table = Task::currentName };
-        m_taskdb.add(TaskDB::currentName, t);
         tasks.push_back(t);
     }
     {
         Task t = { .id = 3,  .name = "Task2", .table = Task::backlogName};
-        m_taskdb.add(TaskDB::currentName, t);
         tasks.push_back(t);
     }
 
@@ -32,6 +28,6 @@ MainWindow::MainWindow(QWidget* parent) :
     ui.timerWidget->setTimer(&m_tomatoTimer);
     ui.timerWidget->setModel(&m_taskModel);
     ui.settingsWidget->setTimer(&m_tomatoTimer);
-    ui.tasksWidget->setTaskDB(&m_taskdb);
+    ui.tasksWidget->setModel(&m_taskModel);
     connect(ui.settingsWidget, &SettingsWidget::updated, ui.timerWidget, &TimerWidget::timerUpdated);
 }

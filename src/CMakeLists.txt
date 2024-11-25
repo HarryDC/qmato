@@ -8,8 +8,6 @@ qt_add_executable(${PROJECT_NAME}
 	settingswidget.ui
 	task.cpp
 	task.hpp
-	taskdb.cpp
-	taskdb.hpp
 	tasktablemodel.cpp
 	tasktablemodel.hpp
 	taskwidget.cpp

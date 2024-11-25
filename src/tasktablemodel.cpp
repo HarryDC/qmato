@@ -83,16 +83,19 @@ bool TaskTableModel::setData(const QModelIndex& index, const QVariant& value, in
 {
     if (index.isValid() && role == Qt::EditRole) {
         const int row = index.row();
-        auto contact = m_tasks.value(row);
+        auto task = m_tasks.value(row);
 
         switch (index.column()) {
         case Task::nameColumn:
-            contact.name = value.toString();
+            task.name = value.toString();
+            break;
+        case Task::tableColumn:
+            task.table = value.toString();
             break;
         default:
             return false;
         }
-        m_tasks.replace(row, contact);
+        m_tasks.replace(row, task);
         emit dataChanged(index, index, { Qt::DisplayRole, Qt::EditRole });
 
         return true;

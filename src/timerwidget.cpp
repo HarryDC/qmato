@@ -96,7 +96,9 @@ void TimerWidget::intervalTimedOut() {
 
 void TimerWidget::completedCurrentTask(bool)
 {
-    // Move selected task to completed model (or just set status flag)
+    auto model = ui.taskBox->model();
+    auto index = model->index(ui.taskBox->currentIndex(), Task::tableColumn);
+    model->setData(index, Task::completedName);
 }
 
 void TimerWidget::updateText()
