@@ -37,6 +37,8 @@ public:
 
     bool insertRows(int position, int rows, const QModelIndex&);
 
+    bool insertRow(int position, const Task& task);
+
     bool removeRows(int position, int rows, const QModelIndex&);
 
     bool setData(const QModelIndex& index, const QVariant& value, int role);
@@ -46,6 +48,11 @@ public:
     const QVector<Task>& getTasks() const;
 
     void setTasks(QVector<Task> tasks);
+
+    static constexpr int idColumn{ 0 };
+    static constexpr int nameColumn{ 1 };
+    static constexpr int tableColumn{ 2 };
+    static constexpr int columns{ 3 };
 
 private:
     QVector<Task> m_tasks;

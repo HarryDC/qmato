@@ -40,9 +40,9 @@ TimerWidget::TimerWidget(QWidget* parent) : QWidget(parent)
 
     m_filterModel.setFilterFixedString(Task::currentName);
     m_filterModel.setSourceModel(m_taskmodel);
-    m_filterModel.setFilterKeyColumn(Task::tableColumn);
+    m_filterModel.setFilterKeyColumn(TaskTableModel::tableColumn);
     ui.taskBox->setModel(&m_filterModel);
-    ui.taskBox->setModelColumn(Task::nameColumn);
+    ui.taskBox->setModelColumn(TaskTableModel::nameColumn);
 }
 
 void TimerWidget::setTimer(TomatoTimer* timer)
@@ -63,6 +63,7 @@ void TimerWidget::setModel(TaskTableModel* taskModel)
 {
     m_taskmodel = taskModel;
     m_filterModel.setSourceModel(taskModel);
+    ui.taskBox->setModelColumn(TaskTableModel::nameColumn);
 }
 
 void TimerWidget::updateDisplay() {
@@ -111,7 +112,7 @@ void TimerWidget::intervalTimedOut() {
 void TimerWidget::completedCurrentTask(bool)
 {
     auto model = ui.taskBox->model();
-    auto index = model->index(ui.taskBox->currentIndex(), Task::tableColumn);
+    auto index = model->index(ui.taskBox->currentIndex(), TaskTableModel::tableColumn);
     model->setData(index, Task::completedName);
 }
 

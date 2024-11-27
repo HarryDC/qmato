@@ -18,17 +18,34 @@ TaskWidget::TaskWidget(QWidget* parent) : QWidget(parent)
 {
     ui.setupUi(this);
     m_completedModel.setFilterFixedString(Task::completedName);
-    m_completedModel.setFilterKeyColumn(Task::tableColumn);
+    m_completedModel.setFilterKeyColumn(TaskTableModel::tableColumn);
     m_currentModel.setFilterFixedString(Task::currentName);
-    m_currentModel.setFilterKeyColumn(Task::tableColumn);
+    m_currentModel.setFilterKeyColumn(TaskTableModel::tableColumn);
 
     ui.currentView->setModel(&m_currentModel);
-
     ui.completedView->setModel(&m_completedModel);
+
+    connect(ui.addButton, &QPushButton::clicked, this, &TaskWidget::onAdd);
 }
 
 void TaskWidget::setModel(TaskTableModel* model) {
     m_model = model;
     m_completedModel.setSourceModel(model);
     m_currentModel.setSourceModel(model);
+    // Can't set this in the constructor as the model is null
+    ui.currentView->setModelColumn(TaskTableModel::nameColumn);
+    ui.completedView->setModelColumn(TaskTableModel::nameColumn);
+}
+
+void TaskWidget::onDelete(bool)
+{
+
+}
+
+void TaskWidget::onAdd(bool)
+{
+    Task t;
+    t.name = "New Task";
+    t.table = Task::currentName;
+    m_model->insertRow(m_model->rowCount(QModelIndex()), t);
 }

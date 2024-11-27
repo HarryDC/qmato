@@ -27,7 +27,7 @@ int TaskTableModel::rowCount(const QModelIndex& parent) const
 
 int TaskTableModel::columnCount(const QModelIndex& parent) const
 {
-    return parent.isValid() ? 0 : Task::columnCount;
+    return parent.isValid() ? 0 : TaskTableModel::columns;
 }
 
 QVariant TaskTableModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -37,9 +37,9 @@ QVariant TaskTableModel::headerData(int section, Qt::Orientation orientation, in
 
     if (orientation == Qt::Horizontal) {
         switch (section) {
-        case Task::nameColumn:
+        case nameColumn:
             return tr("Task");
-        case Task::tableColumn:
+        case tableColumn:
             return tr("Table");
         default:
             break;
@@ -60,9 +60,9 @@ QVariant TaskTableModel::data(const QModelIndex& index, int role) const
         const auto& task = m_tasks.at(index.row());
 
         switch (index.column()) {
-        case Task::nameColumn:
+        case nameColumn:
             return task.name;
-        case Task::tableColumn:
+        case tableColumn:
             return task.table;
         default:
             break;
@@ -76,8 +76,15 @@ bool TaskTableModel::insertRows(int position, int rows, const QModelIndex&)
     beginInsertRows(QModelIndex(), position, position + rows - 1);
 
     for (int row = 0; row < rows; ++row)
-        m_tasks.insert(position, { Task::newId(), QString() });
+        m_tasks.insert(position, {});
 
+    endInsertRows();
+    return true;
+}
+
+bool TaskTableModel::insertRow(int position, const Task& task) {
+    beginInsertRows(QModelIndex(), position, position);
+    m_tasks.insert(position, task);
     endInsertRows();
     return true;
 }
@@ -100,10 +107,10 @@ bool TaskTableModel::setData(const QModelIndex& index, const QVariant& value, in
         auto task = m_tasks.value(row);
 
         switch (index.column()) {
-        case Task::nameColumn:
+        case nameColumn:
             task.name = value.toString();
             break;
-        case Task::tableColumn:
+        case tableColumn:
             task.table = value.toString();
             break;
         default:

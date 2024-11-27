@@ -17,6 +17,7 @@
 #include "ui_mainwindow.h"
 
 #include <QTimer>
+#include <QVariant>
 
 #include "tomatotimer.hpp"
 #include "tasktablemodel.hpp"
@@ -29,8 +30,14 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
 
 private slots:
+    void loadTasks();
+    void saveTasks();
+
 
 private:
+    QVariant loadJson(const QString& filename);
+    QVariant saveJson(const QJsonDocument& doc, const QString& filename);
+
     Ui::MainWindow ui;
     TomatoTimer m_tomatoTimer;
     TaskTableModel m_taskModel;

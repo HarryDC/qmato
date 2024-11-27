@@ -27,6 +27,10 @@ public:
 
     void setModel(TaskTableModel* model);
 
+public slots:
+    void onDelete(bool);
+    void onAdd(bool);
+
 private:
     Ui::TaskWidget ui;
 

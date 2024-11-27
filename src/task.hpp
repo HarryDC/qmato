@@ -15,6 +15,7 @@
 #pragma once
 
 #include <QString>
+#include <QJsonValue>
 
 struct Task {
     static const QString backlogName;
@@ -22,9 +23,10 @@ struct Task {
     static const QString currentName;
     static const QString completedName;
 
-    static constexpr int nameColumn{ 0 };
-    static constexpr int tableColumn{ 1 };
-    static constexpr int columnCount{ 2 };
+    Task() : id(Task::newId()) {}
+
+    Task(const QJsonValue& obj);
+    QJsonValue toJson() const;
 
     int id;
     QString name;
@@ -41,7 +43,7 @@ struct Task {
     }
 
     static int newId() {
-        return m_maxId++;
+        return ++m_maxId;
     }
 
 

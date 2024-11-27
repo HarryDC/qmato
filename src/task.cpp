@@ -14,9 +14,34 @@
 
 #include "task.hpp"
 
+#include <QJsonObject>
+
 const QString Task::backlogName = "Backlog";
 const QString Task::iceboxName = "Icebox";
 const QString Task::currentName = "Current";
 const QString Task::completedName = "Completed";
 
 int Task::m_maxId = 0;
+
+Task::Task(const QJsonValue& obj) {
+    id = obj["id"].toInt();
+    name = obj["name"].toString();
+    table = obj["table"].toString();
+    estimate = obj["estimate"].toInt();
+    elapsedTime = obj["elapsedTime"].toInt();
+
+    if (Task::m_maxId < id) {
+        Task::m_maxId = id;
+    }
+}
+
+QJsonValue Task::toJson() const {
+    QJsonObject obj;
+    obj["id"] = id;
+    obj["name"] = name;
+    obj["table"] = table;
+    obj["estimate"] = estimate;
+    obj["elapsedTime"] = elapsedTime;
+
+    return QJsonValue(obj);
+}
